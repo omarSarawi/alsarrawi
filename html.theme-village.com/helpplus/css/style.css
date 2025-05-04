@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Heebo&amp;family=Poppins:wght@500;600;700&amp;display=swap");
+/* 228 */
+
+
+
+
+
 
 .details{
   font-size: 20px;
@@ -225,10 +231,9 @@ textarea:focus,
 .single-article {
   background: #fffcf4;
 }
-5px 25px 5px 25px 
-.bg-info {
+/* .bg-info {
   background-color: #fff !important;
-}
+} */
 
 .section-padding {
   padding: 40px 0;

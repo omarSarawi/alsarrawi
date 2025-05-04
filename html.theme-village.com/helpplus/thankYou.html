@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You for Your Donation</title>
+  <style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* BASE */
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #FFFDF5;
+      color: #0B1B4F;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* CONTAINER */
+    .container {
+      padding: 1rem;
+      max-width: 500px;
+    }
+
+    /* MAIN HEADING */
+    .main-title {
+      font-size: 4rem;          /* ≈64px on desktop */ 
+      font-weight: bold;
+      color: #FFB100;
+      line-height: 1.1;
+    }
+
+    /* SUBHEADING */
+    .subheading {
+      margin-top: 0.5rem;
+      font-size: 1.5rem;        /* ≈24px */ 
+      font-weight: 500;
+      color: #0B1B4F;
+      line-height: 1.3;
+    }
+
+    /* BUTTON */
+    .button {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;          /* 16px minimum */ 
+      font-weight: 600;
+      color: #fff;
+      background-color: #FFB100;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #e09900;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .main-title { font-size: 3rem; }     /* ≈48px */ 
+      .subheading { font-size: 1.25rem; }  /* ≈20px */ 
+      .button { padding: 0.5rem 1rem; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="main-title">Thank You for Your Donation</div>
+    <div class="subheading">Your support makes a real difference.</div>
+    <a href="index-4.html" class="button">Back To Home</a>
+  </div>
+</body>
+</html>
