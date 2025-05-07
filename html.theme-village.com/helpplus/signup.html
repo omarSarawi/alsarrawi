@@ -49,33 +49,49 @@
               <h4 class="mb-4 text-center">Create Your Account</h4>
 
               <form id="signupForm" class="needs-validation" novalidate>
-                <div class="row mb-3">
-                  <div class="col">
-                    <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="firstName" required />
-                    <div class="invalid-feedback">Enter your first name.</div>
-                  </div>
-                  <div class="col">
-                    <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="lastName" required />
-                    <div class="invalid-feedback">Enter your last name.</div>
+                <!-- USERNAME -->
+                <div class="mb-3">
+                  <label for="username" class="form-label"
+                    >Username <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    name="username"
+                    required
+                    minlength="5"
+                  />
+                  <div class="invalid-feedback">
+                    Enter a username (at least 5 characters).
                   </div>
                 </div>
 
+                <!-- EMAIL -->
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                  <label for="email" class="form-label"
+                    >Email <span class="text-danger">*</span></label
+                  >
                   <input type="email" class="form-control" id="email" required />
                   <div class="invalid-feedback">Enter a valid email.</div>
                 </div>
 
+                <!-- PHONE -->
                 <div class="mb-3">
-                  <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                  <label for="phone" class="form-label"
+                    >Phone Number <span class="text-danger">*</span></label
+                  >
                   <input id="phone" type="tel" class="form-control" required />
-                  <div class="invalid-feedback" id="phoneFeedback">Enter a valid Jordanian phone number (e.g., 07X1234567).</div>
+                  <div class="invalid-feedback" id="phoneFeedback">
+                    Enter a valid phone number
+                  </div>
                 </div>
 
+                <!-- DATE OF BIRTH -->
                 <div class="row mb-3">
-                  <label class="form-label col-12">Date of Birth <span class="text-danger">*</span></label>
+                  <label class="form-label col-12">
+                    Date of Birth <span class="text-danger">*</span>
+                  </label>
                   <div class="col-4">
                     <select class="form-select dob" id="dobDay" required>
                       <option value="" disabled selected>Day</option>
@@ -108,8 +124,11 @@
                   </div>
                 </div>
 
+                <!-- PASSWORD -->
                 <div class="mb-3">
-                  <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                  <label for="password" class="form-label"
+                    >Password <span class="text-danger">*</span></label
+                  >
                   <input
                     type="password"
                     class="form-control"
@@ -123,15 +142,31 @@
                   </div>
                 </div>
 
+                <!-- CONFIRM PASSWORD -->
                 <div class="mb-3">
-                  <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
-                  <input type="password" class="form-control" id="confirmPassword" minlength="8" required />
-                  <div class="invalid-feedback" id="passFeedback">Passwords must match.</div>
+                  <label for="confirmPassword" class="form-label"
+                    >Confirm Password <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="confirmPassword"
+                    minlength="8"
+                    required
+                  />
+                  <div class="invalid-feedback" id="passFeedback">
+                    Passwords must match.
+                  </div>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                  <small>Already have an account? <a href="signin.html">Log In</a></small>
-                  <button type="submit" id="signupBtn" class="btn btn-action">Submit</button>
+                  <small
+                    >Already have an account?
+                    <a href="signin.html">Log In</a>
+                  </small>
+                  <button type="submit" id="signupBtn" class="btn btn-action">
+                    Submit
+                  </button>
                 </div>
               </form>
             </div>
@@ -145,27 +180,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // Populate DOB selects
         const daySel = document.getElementById("dobDay"),
-              yearSel = document.getElementById("dobYear"),
-              currentYear = new Date().getFullYear();
-
+          yearSel = document.getElementById("dobYear"),
+          currentYear = new Date().getFullYear();
         for (let d = 1; d <= 31; d++) daySel.add(new Option(d, d));
         for (let y = currentYear; y >= 1900; y--) yearSel.add(new Option(y, y));
 
+        // Grab elements
         const form = document.getElementById("signupForm"),
-              pw = document.getElementById("password"),
-              cpw = document.getElementById("confirmPassword"),
-              phoneIn = document.getElementById("phone"),
-              pwFB = document.getElementById("pwFeedback"),
-              passFB = document.getElementById("passFeedback"),
-              phoneFB = document.getElementById("phoneFeedback");
+          username = document.getElementById("username"),
+          pw = document.getElementById("password"),
+          cpw = document.getElementById("confirmPassword"),
+          phoneIn = document.getElementById("phone"),
+          pwFB = document.getElementById("pwFeedback"),
+          passFB = document.getElementById("passFeedback"),
+          phoneFB = document.getElementById("phoneFeedback");
 
+        // intl-tel-input setup
         const iti = window.intlTelInput(phoneIn, {
           initialCountry: "jo",
           preferredCountries: ["jo"],
-          utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+          utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
 
+        // Username live validation
+        username.addEventListener("input", () => {
+          username.setCustomValidity("");
+          if (username.value.trim().length < 3) {
+            username.setCustomValidity("Too short");
+          }
+        });
+
+        // Password live validation
         pw.addEventListener("input", () => {
           pw.setCustomValidity("");
           pwFB.style.display = "none";
@@ -175,38 +223,39 @@
           }
         });
 
+        // Confirm password live validation
         cpw.addEventListener("input", () => {
           cpw.setCustomValidity("");
           passFB.style.display = "none";
           if (pw.value !== cpw.value) {
-            cpw.setCustomValidity("Passwords do not match");
+            cpw.setCustomValidity("Mismatch");
             passFB.style.display = "block";
           }
         });
 
-        function validateJordanPhone(phone) {
-          const number = phone.replace(/\D/g, ""); // digits only
-          return /^07[7-9]\d{7}$/.test(number);
+        // Simple Jordanian phone check
+        function validateJordanPhone(number) {
+          const digits = number.replace(/\D/g, "");
+          return /^07[7-9]\d{7}$/.test(digits);
         }
 
+        // Form submission
         form.addEventListener("submit", (e) => {
-          const phoneValue = phoneIn.value.trim();
-
-          let isValidJordanPhone = validateJordanPhone(phoneValue);
-
-          if (!form.checkValidity() || !iti.isValidNumber() || !isValidJordanPhone) {
+          // phone validity
+          const phoneVal = phoneIn.value.trim();
+          let validPhone =
+            iti.isValidNumber() && validateJordanPhone(phoneVal);
+          if (!form.checkValidity() || !validPhone) {
             e.preventDefault();
             e.stopPropagation();
-
-            if (!iti.isValidNumber() || !isValidJordanPhone) {
-              phoneIn.setCustomValidity("Invalid phone");
+            if (!validPhone) {
+              phoneIn.setCustomValidity("Invalid");
               phoneFB.style.display = "block";
             } else {
               phoneIn.setCustomValidity("");
               phoneFB.style.display = "none";
             }
           }
-
           form.classList.add("was-validated");
         });
       });
