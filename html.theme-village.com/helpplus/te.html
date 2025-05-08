@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donor List</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .btn-back {
+      font-size: 1rem;
+      color: #007bff;
+      text-decoration: none;
+    }
+    .btn-back:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+    @media (max-width: 576px) {
+      .table-responsive {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Back Arrow -->
+    <div class="mb-4">
+      <a href="javascript:history.back()" class="btn-back">
+        <i class="bi bi-arrow-left me-1"></i>Back
+      </a>
+    </div>
+
+    <!-- Donor List -->
+    <h2 class="mb-3 text-center">Donor List</h2>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Donor Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Location</th>
+            <th>Blood Type</th>
+            <th>Donation Date</th>
+          </tr>
+        </thead>
+        <tbody id="donorTableBody">
+          <!-- Donor rows inserted by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Donor data with donationDate added
+    const donors = [
+      {
+        name: "Ali Hassan",
+        phone: "079-1234567",
+        email: "ali.hassan@example.com",
+        location: "Amman",
+        bloodType: "O+",
+        donationDate: "2025-05-02"
+      },
+      {
+        name: "Sara Khalil",
+        phone: "078-7654321",
+        email: "sara.khalil@example.com",
+        location: "Zarqa",
+        bloodType: "A-",
+        donationDate: "2025-05-05"
+      },
+      {
+        name: "Yousef Omar",
+        phone: "077-5551234",
+        email: "yousef.omar@example.com",
+        location: "Irbid",
+        bloodType: "B+",
+        donationDate: "2025-04-29"
+      }
+    ];
+
+    // Populate Donor Table
+    const donorTableBody = document.getElementById("donorTableBody");
+    donors.forEach(donor => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${donor.name}</td>
+        <td>${donor.phone}</td>
+        <td>${donor.email}</td>
+        <td>${donor.location}</td>
+        <td>${donor.bloodType}</td>
+        <td>${donor.donationDate}</td>
+      `;
+      donorTableBody.appendChild(tr);
+    });
+  </script>
+</body>
+</html>

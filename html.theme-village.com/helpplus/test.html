@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donor List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .back-container {
+      position: sticky;
+      top: 20px;
+      z-index: 1000;
+    }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: 50px;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    .btn-back i {
+      margin-right: 0.5rem;
+    }
+    .btn-back:hover,
+    .btn-back:focus {
+      background-color: #e2e6ea;
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+    @media (max-width: 576px) {
+      .table-responsive {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="back-container mb-4">
+      <button type="button" class="btn btn-light btn-back shadow-sm" onclick="history.back()" aria-label="Go back">
+        <i class="bi bi-arrow-left-circle-fill fs-4"></i>
+        Back
+      </button>
+    </div>
+
+    <h2 class="mb-3 text-center">Donor List</h2>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Donor Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Location</th>
+            <th>Blood Type</th>
+            <th>Donation Date</th>
+          </tr>
+        </thead>
+        <tbody id="donorTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const donors = [
+      { name: "Ali Hassan",  phone: "079-1234567", email: "ali.hassan@example.com",  location: "Amman",  bloodType: "O+", donationDate: "2025-05-02" },
+      { name: "Sara Khalil", phone: "078-7654321", email: "sara.khalil@example.com", location: "Zarqa",  bloodType: "A-", donationDate: "2025-05-05" },
+      { name: "Yousef Omar", phone: "077-5551234", email: "yousef.omar@example.com", location: "Irbid",  bloodType: "B+", donationDate: "2025-04-29" }
+    ];
+
+    const tbody = document.getElementById("donorTableBody");
+    donors.forEach(donor => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${donor.name}</td>
+        <td>${donor.phone}</td>
+        <td>${donor.email}</td>
+        <td>${donor.location}</td>
+        <td>${donor.bloodType}</td>
+        <td>${donor.donationDate}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  </script>
+</body>
+</html>
