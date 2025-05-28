@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Donor List</title>
+  <title>Blood Donation Campaign Dashboard</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons -->
@@ -13,14 +13,17 @@
       background-color: #f8f9fa;
       padding: 20px;
     }
-    .btn-back {
-      font-size: 1rem;
-      color: #007bff;
+    .btn-details {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
       text-decoration: none;
     }
-    .btn-back:hover {
-      color: #0056b3;
-      text-decoration: underline;
+    .btn-details:hover {
+      background-color: #0056b3;
+      color: #fff;
     }
     @media (max-width: 576px) {
       .table-responsive {
@@ -31,78 +34,138 @@
 </head>
 <body>
   <div class="container">
-    <!-- Back Arrow -->
-    <div class="mb-4">
-      <a href="javascript:history.back()" class="btn-back">
-        <i class="bi bi-arrow-left me-1"></i>Back
-      </a>
-    </div>
-
-    <!-- Donor List -->
-    <h2 class="mb-3 text-center">Donor List</h2>
+    <h1 class="mb-4 text-center">Blood Donation Campaign Dashboard</h1>
     <div class="table-responsive">
       <table class="table align-middle">
         <thead class="table-dark">
           <tr>
-            <th>Donor Name</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>Location</th>
-            <th>Blood Type</th>
-            <th>Donation Date</th>
+            <th>Campaign Name</th>
+            <th>Blood Type Needed</th>
+            <th>Units Required</th>
+            <th>Units Collected</th>
+            <th>Goal Achieved</th>
+            <th>Details</th>
           </tr>
         </thead>
-        <tbody id="donorTableBody">
-          <!-- Donor rows inserted by JavaScript -->
+        <tbody id="campaignTableBody">
+          <!-- Rows will be inserted here by JavaScript -->
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- Bootstrap JS Bundle (includes Popper) -->
+  <!-- Modal -->
+  <div class="modal fade" id="campaignModal" tabindex="-1" aria-labelledby="campaignModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="campaignModalLabel">Campaign Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="campaignModalBody">
+          <!-- Campaign details injected here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Donor data with donationDate added
-    const donors = [
+    // Campaign data
+    const campaigns = [
       {
-        name: "Ali Hassan",
-        phone: "079-1234567",
-        email: "ali.hassan@example.com",
-        location: "Amman",
+        name: "Save Lives - Amman",
         bloodType: "O+",
-        donationDate: "2025-05-02"
+        unitsRequired: 100,
+        unitsCollected: 85,
+        goalAchieved: false,
+        details: "This campaign aims to collect O+ blood units to support local hospitals in Amman."
       },
       {
-        name: "Sara Khalil",
-        phone: "078-7654321",
-        email: "sara.khalil@example.com",
-        location: "Zarqa",
+        name: "Emergency Drive 2025",
         bloodType: "A-",
-        donationDate: "2025-05-05"
+        unitsRequired: 50,
+        unitsCollected: 50,
+        goalAchieved: true,
+        details: "An emergency drive to gather A- blood units for critical patients in need."
       },
       {
-        name: "Yousef Omar",
-        phone: "077-5551234",
-        email: "yousef.omar@example.com",
-        location: "Irbid",
+        name: "Ramadan Relief",
         bloodType: "B+",
-        donationDate: "2025-04-29"
+        unitsRequired: 75,
+        unitsCollected: 60,
+        goalAchieved: false,
+        details: "A special campaign during Ramadan to collect B+ blood units for ongoing treatments."
       }
     ];
 
-    // Populate Donor Table
-    const donorTableBody = document.getElementById("donorTableBody");
-    donors.forEach(donor => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${donor.name}</td>
-        <td>${donor.phone}</td>
-        <td>${donor.email}</td>
-        <td>${donor.location}</td>
-        <td>${donor.bloodType}</td>
-        <td>${donor.donationDate}</td>
+    // Populate the table
+    const tableBody = document.getElementById("campaignTableBody");
+    campaigns.forEach((campaign, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${campaign.name}</td>
+        <td>${campaign.bloodType}</td>
+        <td>${campaign.unitsRequired}</td>
+        <td>${campaign.unitsCollected}</td>
+        <td>
+          <span class="badge ${campaign.goalAchieved ? 'bg-success' : 'bg-danger'}">${campaign.goalAchieved ? 'Yes' : 'No'}</span>
+        </td>
+        <td><button type="button" class="btn-details" data-bs-toggle="modal" data-bs-target="#campaignModal" data-index="${index}">View Details</button></td>
       `;
-      donorTableBody.appendChild(tr);
+      tableBody.appendChild(row);
+    });
+
+    // Modal show listener
+    const campaignModal = document.getElementById('campaignModal');
+    campaignModal.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      const index = button.getAttribute('data-index');
+      const campaign = campaigns[index];
+      const modalTitle = campaignModal.querySelector('.modal-title');
+      const modalBody = campaignModal.querySelector('.modal-body');
+
+      modalTitle.textContent = campaign.name;
+      modalBody.innerHTML = `
+        <div class="container-fluid">
+          <div class="card">
+            <div class="card-header bg-light text-primary">
+              <i class="bi bi-megaphone-fill me-2"></i> Campaign Overview
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                <span><i class="bi bi-droplet-fill bi-lg me-2"></i><strong>Blood Type Needed:</strong></span>
+                <span class="fw-bold">${campaign.bloodType}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                <span><i class="bi bi-box-seam bi-lg me-2"></i><strong>Units Required:</strong></span>
+                <span class="fw-bold">${campaign.unitsRequired}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                <span><i class="bi bi-collection-fill bi-lg me-2"></i><strong>Units Collected:</strong></span>
+                <span class="fw-bold">${campaign.unitsCollected}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                <span><i class="bi bi-check-circle-fill bi-lg me-2"></i><strong>Goal Achieved:</strong></span>
+                <span class="fw-bold ${campaign.goalAchieved ? 'text-success' : 'text-danger'}">${campaign.goalAchieved ? 'Yes' : 'No'}</span>
+              </li>
+              <li class="list-group-item py-3">
+                <i class="bi bi-info-circle-fill bi-lg me-2"></i>
+                <strong>Details:</strong> ${campaign.details}
+              </li>
+            </ul>
+            <div class="card-footer text-end">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                <i class="bi bi-x-circle me-1"></i> Close Details
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
     });
   </script>
 </body>

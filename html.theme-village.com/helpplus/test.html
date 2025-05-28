@@ -1,93 +1,147 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Donor List</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f8f9fa;
-      padding: 20px;
-    }
-    .back-container {
-      position: sticky;
-      top: 20px;
-      z-index: 1000;
-    }
-    .btn-back {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border-radius: 50px;
-      transition: background-color 0.2s, transform 0.1s;
-    }
-    .btn-back i {
-      margin-right: 0.5rem;
-    }
-    .btn-back:hover,
-    .btn-back:focus {
-      background-color: #e2e6ea;
-      transform: translateY(-1px);
-      text-decoration: none;
-    }
-    @media (max-width: 576px) {
-      .table-responsive {
-        font-size: 14px;
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hospital Sidebar Card</title>
+    <!-- Bootstrap CSS v5.3.6 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-pQQ6+PhT7k9Fzj41xlJeBb2FZpFP/2N4i7I+K4uC2QIqRBVOu3u8zJFy7DJgtZm9DIHG7YuUN0z6KXiF7tc5Og=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        min-height: 100vh;
+        background: #f8f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="back-container mb-4">
-      <button type="button" class="btn btn-light btn-back shadow-sm" onclick="history.back()" aria-label="Go back">
-        <i class="bi bi-arrow-left-circle-fill fs-4"></i>
-        Back
-      </button>
-    </div>
+      .sidebar {
+        width: 300px;
+        padding: 2rem 1rem;
+        background: #fff;
+        border-right: 1px solid #dee2e6;
+      }
+      .card-hospital {
+        border: none;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .card-hospital:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      }
+      .card-banner {
+        height: 120px;
+        background: url("https://via.placeholder.com/300x120") center/cover
+          no-repeat;
+      }
+      .profile-pic {
+        width: 96px;
+        height: 96px;
+        object-fit: cover;
+        border: 3px solid #fff;
+        border-radius: 50%;
+        margin-top: -48px;
+      }
+      .file-input-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+      }
+      .file-input-wrapper input[type="file"] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: 0;
+        height: 100%;
+        width: 100%;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="card card-hospital text-center">
+        <!-- Hospital Banner -->
+        <div class="card-banner"></div>
+        <div class="card-body">
+          <!-- Hospital Name -->
+          <h5 class="card-title">City Hospital</h5>
+          <!-- Admin Profile -->
+          <img
+            id="adminPic"
+            src="https://via.placeholder.com/96"
+            alt="Admin Photo"
+            class="profile-pic shadow"
+          />
+          <h6 class="mt-2 mb-1">Dr. Omar Al-Sarawi</h6>
+          <p class="text-muted mb-2">
+            <i class="fas fa-envelope me-1"></i>
+            omar.sarawi@cityhospital.jo
+            <br />
+            <i class="fas fa-phone-alt me-1"></i>
+            +962 78 765 4321
+          </p>
+          <!-- Upload Button & Logout -->
+          <div class="d-grid gap-2">
+            <div class="file-input-wrapper mb-2">
+              <button class="btn btn-outline-secondary">
+                <i class="fas fa-upload me-1"></i> Change Photo
+              </button>
+              <input type="file" id="uploadInput" accept="image/*" />
+            </div>
+            <button id="logoutBtn" class="btn btn-outline-danger">
+              <i class="fas fa-sign-out-alt me-1"></i> Log Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
 
-    <h2 class="mb-3 text-center">Donor List</h2>
-    <div class="table-responsive">
-      <table class="table align-middle">
-        <thead class="table-dark">
-          <tr>
-            <th>Donor Name</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>Location</th>
-            <th>Blood Type</th>
-            <th>Donation Date</th>
-          </tr>
-        </thead>
-        <tbody id="donorTableBody"></tbody>
-      </table>
-    </div>
-  </div>
+    <main class="p-4">
+      <h2>Welcome to City Hospital Dashboard</h2>
+      <p>
+        Use the sidebar to manage patient records, schedule appointments, or
+        review staff rosters.
+      </p>
+    </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const donors = [
-      { name: "Ali Hassan",  phone: "079-1234567", email: "ali.hassan@example.com",  location: "Amman",  bloodType: "O+", donationDate: "2025-05-02" },
-      { name: "Sara Khalil", phone: "078-7654321", email: "sara.khalil@example.com", location: "Zarqa",  bloodType: "A-", donationDate: "2025-05-05" },
-      { name: "Yousef Omar", phone: "077-5551234", email: "yousef.omar@example.com", location: "Irbid",  bloodType: "B+", donationDate: "2025-04-29" }
-    ];
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Preview uploaded image
+      document
+        .getElementById("uploadInput")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => {
+            document.getElementById("adminPic").src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
 
-    const tbody = document.getElementById("donorTableBody");
-    donors.forEach(donor => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${donor.name}</td>
-        <td>${donor.phone}</td>
-        <td>${donor.email}</td>
-        <td>${donor.location}</td>
-        <td>${donor.bloodType}</td>
-        <td>${donor.donationDate}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  </script>
-</body>
+      // Logout confirmation
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        if (confirm("Are you sure you want to log out?")) {
+          // implement actual logout logic here
+          alert("Logged out");
+        }
+      });
+    </script>
+  </body>
 </html>
